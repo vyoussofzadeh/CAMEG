@@ -23,9 +23,9 @@ epleng = [];
 
 
 %% PSD
-figure,
-[y,f]=spectopo(Value, length(Value), fs, 'limits' ,[1 40 NaN NaN -10 10]);
-title('Spectral components of input data');
+[power, freq] = spectopo(Value,[1,30], fs);
+[y,f]=spectopo(Value, length(Value), fs, 'limits' ,[1 30 NaN NaN -10 10]);
+
 
 fq = input('Enter frequency range [1,30]: ');
 

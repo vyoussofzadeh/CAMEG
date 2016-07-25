@@ -1,4 +1,4 @@
-function cameg_datapre_readdata()
+function cameg_datapre_datasubtraction()
 % ___________________________________________________________________________
 % Connectivity analysis of MEG data (CA-MEG)
 %
@@ -12,12 +12,18 @@ function cameg_datapre_readdata()
 disp('Reading source data ...')
 
 if nargin == 0
-    files = spm_select(1,'.mat','Select source MEG files');
+    files = spm_select(2,'.mat','Select source MEG files');
 end
 
-load(files);
+for i = 1:size(files,1)
+    load(files(i,:));
+    Data{i} = Value;
+end
 
 fs = input('Enter sampling frequency e.g. 1200 [Hz]: ');
+
+%% Subtraction
+Value = Data{2} - Data{1};
 
 for i = 1:size(Value,1)
     roi{i}= Atlas.Scouts(i).Region;
@@ -51,6 +57,6 @@ set(gcf, 'Position', [800   100   1200   800]);
 
 A = (cell2table([roi;roi_l]'))
 
-save cameg_datafile files A Value Time roi fs
+save cameg_datafile files A Value Time roi
 
 disp('Data was imported!')
