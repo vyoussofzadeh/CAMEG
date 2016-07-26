@@ -40,7 +40,14 @@ if in ==1
     seg = input('Set time intervals e.g., [300,700] ms: ');
     Value = Value(:,floor(seg(1)*fs./1000):floor(seg(2)*fs./1000));
     Time = Time(:,floor(seg(1)*fs./1000):floor(seg(2)*fs./1000));
+    
+    % Upsampling
+%     nValue = resample(Value1',fs,length(Value1))';
+% %     y = interp1(Value1',Value');
+%     nTime = resample(Time1',fs,length(Time1))';
+% y = upsample(x,n)
 end
+
 clf, 
 hl = plot(Time, Value);
 xlabel('Time(s)');

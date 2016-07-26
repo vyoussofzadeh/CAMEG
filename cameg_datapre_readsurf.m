@@ -17,7 +17,6 @@ end
 
 load(files);
 % load(files);
-save cameg_surffile files
 
 %%
 load cameg_mrifile
@@ -58,7 +57,7 @@ tmp = char(A.Var1);
 node = strcat(num2str([newPosMNI,m,c,L]),tmp);
 node(:,end-4:end-3) = char(' ');
 dlmwrite('node.node',node,'delimiter','');
-
+save cameg_surffile files newPosMNI m c L tmp
 
 disp('Surface file was imported!')
 
