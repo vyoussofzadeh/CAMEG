@@ -38,8 +38,9 @@ freqs{1} = 2:4;
 freqs{2} = 4:7;
 freqs{3} = 8:12;
 freqs{4} = 15:29;
+freqs{5} = 1:29;
 
-label = {'Delta','Theta','Alpha','Beta'};
+label = {'Delta','Theta','Alpha','Beta','All freq'};
 % [psi, stdpsi, psisum, stdpsisum]=data2psi(Value',segleng,epleng,freqs);
 seglen = length(Value); 
 
@@ -48,7 +49,7 @@ for i=1:length(freqs)
     [psi, stdpsi, ~, ~] = data2psi(Value',seglen,epleng,freqs{i});
     npsi = abs(psi./(stdpsi+eps));
     edge{i} = npsi;
-    subplot(2,2,i)
+    subplot(3,2,i)
     h{i}  = plot_conn(edge{i},[], 'nPSI'); title(label{i});
     set(gcf, 'Position', [800   100   800   700]);
 end
@@ -76,7 +77,8 @@ display('1: Delta');
 display('2: Theta');
 display('3: Alpha');
 display('4: Beta');
-in  = input('Band selection (1-4):');
+display('5: full freq');
+in  = input('Band selection (1-5):');
 edge = edge{in};
 figure,
 plot_conn(edge,[], 'nPSI'); title(label{in});

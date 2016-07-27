@@ -36,8 +36,8 @@ At = Atlas(sel);
 % ROI coordinates
 for i = 1:length(At.Scouts)
     A = At.Scouts(i).Seed;
-%     L{i,:} = At.Scouts(i).Region;
-%     L{i,:} = At.Scouts(i).Label;
+    L{i,:} = At.Scouts(i).Region;
+    L{i,:} = At.Scouts(i).Label;
     newPosScs = Vertices(A,:);
     newPosVox = round(cs_convert(sMri, 'scs', 'voxel', newPosScs));
     newPosMNI(i,:) = round((1e3.*cs_convert(sMri, 'voxel', 'mni', newPosVox)),1);

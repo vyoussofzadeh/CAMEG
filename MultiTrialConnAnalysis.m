@@ -33,8 +33,9 @@ freqs{1} = 2:4;
 freqs{2} = 4:7;
 freqs{3} = 8:12;
 freqs{4} = 15:29;
+freqs{5} = 1:30;
 
-label = {'Delta','Theta','Alpha','Beta'};
+label = {'Delta','Theta','Alpha','Beta','Full freq'};
 
 seglen = size(Value,2);
 epleng = [];
@@ -50,7 +51,7 @@ for fq = 1:length(freqs)
 end
 disp('---------------------');
 disp('Conn measures were computed!');
-save cameg_multipletrialconn edge
+save cameg_multipletrialconn edge roi
 
 % Average conn
 parfor fq = 1:length(freqs)
@@ -61,21 +62,24 @@ end
 for i = 1:length(freqs)
     tmp  = cell2mat(avgCell{1,i});
     figure(2)
-    subplot(2,2,i)
-    plot_conn(tmp,[], 'npsi'); title(label{i})
-    %     edge{i} = tmp > 0.9;
-    %     subplot(2,2,i)
-    %     plot_conn(edge{i},[], 'npsi'); title(Freqs(i,1));
-end
-set(gcf, 'Position', [800   100   1200   800]);
-disp('---------------------');
+    subplot(2,3,i)
+    plot_conn(tmp,[], 'npsi'); title(['mean value of ',label{i}]);
+    set(gcf, 'Position', [800   100   1200   800]);
 
+%     tmp2  = cell2mat(stdCell{1,i});
+%     figure(3)
+%     subplot(2,3,i)
+%     plot_conn(tmp2,[], 'npsi'); title(['std value of ',label{i}]);
+%     set(gcf, 'Position', [800   100   1200   800]);
+end
+disp('---------------------');
 
 display('1: Delta');
 display('2: Theta');
 display('3: Alpha');
 display('4: Beta');
-in  = input('surface visualisation (1-4):');
+display('5: Full bands');
+in  = input('surface visualisation (1-5):');
 
 thre = input(['Set the threshold for ',label{in},': ']);
 tmp  = cell2mat(avgCell{1,in});
@@ -90,7 +94,7 @@ Edge = 'edge.edge';
 
 % Power of conn
 cp = con2power(ttmp);
-figure, barh(cp), 
+figure, barh(cp),
 set(gca,'ytick', 1:length(cp),'ytickLabel',roi);
 box off
 set(gca,'color','none');
@@ -100,13 +104,13 @@ set(gcf, 'Position', [900   200   500   900]);
 %% Updating furface file
 cameg_datapre_updatesurf(cp)
 
-figure(3),
+figure(4),
 BrainNet_MapCfg(Mesh,Node,Edge);title(label{in});
 view([-90 0 0])
 
 % in = input('Thresholding (yes = 1)?');
-% 
-% 
+%
+%
 % if in ==1
 %     for i = 1:length(freqs)
 %         %         tmp  = cell2mat(avgCell{1,i});
@@ -114,7 +118,7 @@ view([-90 0 0])
 %         %     subplot(2,2,i)
 %         %     plot_conn(tmp,[], 'npsi'); title(label{i})
 %         disp('---------------------');
-%         
+%
 %         thre = input(['Set the threshold for ',label{i},': ']);
 %         tmp  = cell2mat(avgCell{1,i});
 %         ttmp{i} = tmp > thre;
@@ -124,7 +128,7 @@ view([-90 0 0])
 %         set(gcf, 'Position', [800   100   1200   800]);
 %     end
 % end
-% 
+%
 % load('cameg_meshfile');
 % Mesh = files;
 % Node = 'node.node';

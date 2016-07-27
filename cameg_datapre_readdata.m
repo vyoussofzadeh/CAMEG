@@ -31,7 +31,7 @@ ylabel('Amplitude(AU)');
 title('source activities');
 clickableLegend(hl,roi, 'plotOptions', {'MarkerSize', 6});
 set(gcf, 'Position', [800   100   1200   800]);
-
+% pause
 %% Segmenting data
 fs = size(Value,2);
 in = input('Segment data (yes = 1)?');

@@ -18,6 +18,7 @@ St = zeros(size(Conn,1),size(Conn,2));
 for i = 1: size(Conn,1)
     for j = 1: size(Conn,2)
         for k = 1: size(Conn,3)
+            L = tril(X)
             tmp(k)  = Conn(i,j,k);
         end
         [h,p,ci,stats] = ttest(tmp);
