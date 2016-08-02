@@ -30,7 +30,7 @@ for i=1:length(Atlas)
     Atlasa{i} = Atlas(i).Name;
 end
 cell2table(Atlasa)
-sel = input('Select an atlas consistant with the data file (e.g. 1-6)?');
+sel = input('Select an atlas consistant with the data file (e.g. 6)?');
 At = Atlas(sel);
 
 % ROI coordinates

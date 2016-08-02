@@ -24,11 +24,11 @@ epleng = [];
 
 
 %% PSD
-figure,
-y = spectopo(Value, length(Value), fs, 'limits' ,[1 40 NaN NaN -10 10],'plot', 'on');
-title('Spectral components of input data');
-clickableLegend(gca,roi, 'plotOptions', {'MarkerSize', 6});
-set(gcf, 'Position', [800   100   800   700]);
+% figure,
+% y = spectopo(Value, length(Value), fs, 'limits' ,[1 40 NaN NaN -10 10],'plot', 'on');
+% title('Spectral components of input data');
+% clickableLegend(gca,roi, 'plotOptions', {'MarkerSize', 6});
+% set(gcf, 'Position', [800   100   800   700]);
 
 % fq = input('Enter frequency range [1,30]: ');
 
@@ -42,7 +42,7 @@ freqs{5} = 1:29;
 
 label = {'Delta','Theta','Alpha','Beta','All freq'};
 % [psi, stdpsi, psisum, stdpsisum]=data2psi(Value',segleng,epleng,freqs);
-seglen = length(Value); 
+seglen = length(Value);
 
 figure,
 for i=1:length(freqs)
@@ -50,7 +50,7 @@ for i=1:length(freqs)
     npsi = abs(psi./(stdpsi+eps));
     edge{i} = npsi;
     subplot(3,2,i)
-    h{i}  = plot_conn(edge{i},[], 'nPSI'); title(label{i});
+    h{i}  = plot_conn(edge{i},table2array(A(:,1)), 'nPSI'); title(label{i});
     set(gcf, 'Position', [800   100   800   700]);
 end
 n = length(psi);
@@ -65,7 +65,7 @@ n = length(psi);
 %     roi_l{i}= Atlas.Scouts(i).Label;
 % end
 
-% figure, 
+% figure,
 % hl = plot(Time, Value);
 % xlabel('Time(s)');
 % ylabel('Amplitude(AU)');
@@ -81,7 +81,8 @@ display('5: full freq');
 in  = input('Band selection (1-5):');
 edge = edge{in};
 figure,
-plot_conn(edge,[], 'nPSI'); title(label{in});
+plot_conn(edge,table2array(A(:,2)), 'nPSI'); title(label{in});
+set(gcf, 'Position', [800   200   1000   1000]);
 
 % plot_conn(npsi,roi, 'npsi');
 % save cameg_npsi npsi psi
@@ -92,7 +93,7 @@ if in ==1
     thre = input('Set the threshold: ');
     edge = edge > thre;
     plot_conn(edge,roi, 'thresholded npsi');
-    set(gcf, 'Position', [800   100   800   700]);
+    set(gcf, 'Position', [800   200   1000   1000]);
 end
 dlmwrite('edge.edge',edge,'\t');
 save cameg_matfile edge roi
@@ -101,7 +102,7 @@ disp('(thresholded or org) connectivity matrix was saved!')
 
 % Power of conn
 cp = con2power(edge);
-figure, barh(cp), 
+figure, barh(cp),
 set(gca,'ytick', 1:length(cp),'ytickLabel',roi);
 box off
 set(gca,'color','none');

@@ -19,17 +19,21 @@ load(files);
 
 fs = input('Enter sampling frequency e.g. 1200 [Hz]: ');
 
-for i = 1:size(Value,1)
+L = length(Atlas.Scouts);
+
+for i = 1:L
     roi{i}= Atlas.Scouts(i).Region;
     roi_l{i}= Atlas.Scouts(i).Label;
 end
 
+Value = Value(1:L,:);
+
 figure, 
-hl = plot(Time, Value);
+hl = plot(Time, Value(1:L,:));
 xlabel('Time(s)');
 ylabel('Amplitude(AU)');
 title('source activities');
-clickableLegend(hl,roi, 'plotOptions', {'MarkerSize', 6});
+clickableLegend(hl,roi_l, 'plotOptions', {'MarkerSize', 6});
 set(gcf, 'Position', [800   100   1200   800]);
 % pause
 %% Segmenting data
