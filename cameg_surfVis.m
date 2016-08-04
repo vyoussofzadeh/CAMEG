@@ -15,7 +15,7 @@ Node = 'node.node';
 Edge = 'edge.edge';
 
 load cameg_datafile
-A
+ROI
 
 % load cameg_matfile
 % plot_conn(edge,roi, 'thresholded conn');

@@ -1,4 +1,3 @@
-
 clear all;close all; clc;
 
 Datafile = spm_select(1,'.mat','Select multi-trial source MEG files');
@@ -13,7 +12,6 @@ nValue = reshape(Value,LScouts,Ltrials,size(Value,2));
 
 %% plot average of source activities
 mScout  = squeeze(mean(nValue,2));
-
 
 for i = 1:LScouts
     roi{i}= Atlas.Scouts(i).Region;

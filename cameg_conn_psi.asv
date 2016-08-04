@@ -28,6 +28,10 @@ epleng = [];
 % clickableLegend(gca,roi, 'plotOptions', {'MarkerSize', 6});
 % set(gcf, 'Position', [800   100   800   700]);
 
+% fq = input('Enter frequency range [1,30]: ');
+
+% freqs = fq(1):fq(2);
+% freqs*legth()
 freqs{1} = 2:4;
 freqs{2} = 4:7;
 freqs{3} = 8:12;
@@ -50,6 +54,23 @@ end
 n = length(psi);
 
 
+% note, psi, as calculated by data2psi corresponds to \hat{\PSI}
+% in the paper, i.e., it is not normalized. The final is
+% the normalized version given by:
+
+% for i = 1:n
+%     roi{i}= Atlas.Scouts(i).Region;
+%     roi_l{i}= Atlas.Scouts(i).Label;
+% end
+
+% figure,
+% hl = plot(Time, Value);
+% xlabel('Time(s)');
+% ylabel('Amplitude(AU)');
+% title('source activities');
+% clickableLegend(hl,roi, 'plotOptions', {'MarkerSize', 6});
+% set(gcf, 'Position', [800   100   1200   800]);
+
 display('1: Delta');
 display('2: Theta');
 display('3: Alpha');
@@ -58,7 +79,7 @@ display('5: full freq');
 in  = input('Band selection (1-5):');
 edge = edge{in};
 figure,
-plot_conn(edge,num2cell(1:n), 'nPSI'); title(label{in});
+plot_conn(edge,num2cell(1:length(roi)), 'nPSI'); title(label{in});
 set(gcf, 'Position', [800   200   1000   1000]);
 
 % plot_conn(npsi,roi, 'npsi');
@@ -73,18 +94,18 @@ in = input('Thresholding (yes = 1)?');
 if in ==1
     thre = input('Set the threshold: ');
     edge = edge > thre;
-    plot_conn(edge,num2cell(1:n), 'thresholded npsi');
+    plot_conn(edge,num2cell(1:length(roi)), 'thresholded npsi');
     set(gcf, 'Position', [800   200   1000   1000]);
 end
 dlmwrite('edge.edge',edge,'\t');
-save cameg_matfile edge ROI
+save cameg_matfile edge roi
 
 disp('(thresholded or org) connectivity matrix was saved!')
 
 % Power of conn
 cp = con2power(edge);
 figure, barh(cp),
-set(gca,'ytick', 1:length(cp),'ytickLabel',num2cell(1:n));
+set(gca,'ytick', 1:length(cp),'ytickLabel',num2cell(1:length(roi)));
 box off
 set(gca,'color','none');
 title('Connectivity Strength');
@@ -92,8 +113,6 @@ set(gcf, 'Position', [900   200   500   900]);
 
 %% Updating furface file
 cameg_datapre_updatesurf(cp)
-
-ROI
 
 
 

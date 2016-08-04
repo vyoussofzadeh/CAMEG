@@ -11,10 +11,11 @@ function fig = CAMEG()
 % ___________________________________________________________________________
 clc, close all
 
+p = mfilename('fullpath'); 
+% fileDirectory = fileparts(p);
+cd(fileparts(p));
 display('your current working path is,')
 cd
-
-display('Please change your path to the CAMEG directory for convenience!')
 
 r = 50;
 col = [0.6020 0.8072 0.6014];

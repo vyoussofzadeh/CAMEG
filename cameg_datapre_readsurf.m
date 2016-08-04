@@ -58,11 +58,15 @@ L = zeros(length(At.Scouts),1);
 
 load cameg_datafile
 
-tmp = char(A.Var1);
-node = strcat(num2str([newPosMNI,m,c,L]),tmp);
+% tmp = char(A.Var1);
+% B = num2str(1:length(At.Scouts));
+B = [];
+for i = 1:length(At.Scouts), B{i} = num2str(i); end
+d = cell2char(B');
+node = strcat(num2str([newPosMNI,m,c,L]),d);
 node(:,end-4:end-3) = char(' ');
 dlmwrite('node.node',node,'delimiter','');
-save cameg_surffile files newPosMNI m c L tmp
+save cameg_surffile files newPosMNI m c L d
 
 disp('Surface file was imported!')
 
